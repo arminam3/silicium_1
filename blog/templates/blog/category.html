@@ -1,0 +1,66 @@
+{% extends '_base.html' %}
+{% load my_tags %}
+{% load my_tags %}
+
+{% load static %}
+
+{% block body %}
+    <header class="masthead" style="background-image:url('{% static 'blog/assets/img/home-bg.jpg' %}')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                    <h1>This is <b>{% ME %}</b></h1>
+{#                        <span class="subheading">A Blog Theme by Start Bootstrap</span>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <h3 class="alert alert-primary text-center">دسته بندی: {{ category.title }}</h3>
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                {% for article in articles %}
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="{% url 'blog:article_detail' article.slug %}">
+                            <h2 class="post-title">{{ article.title|safe }}</h2>
+                        </a>
+                        <h4 class="post-subtitle">{{ article.descriptions|truncatewords:10 }}</h4>
+                        {% for cate in article.category.all %}
+                            <a href="{% url 'blog:category' cate.slug %}"># {{ cate.title }}</a>
+                        {% endfor %}
+
+
+                        <p class="post-meta">
+                            {{ article.jalali_published }}
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4"/>
+
+
+                    <!-- Pager-->
+
+                {% endfor %}
+                {% if page_obj.has_next %}
+                        <a class="btn btn-primary text-uppercase "
+                           href="{% url 'blog:category' category.slug  page_obj.next_page_number %}">→ پست های قدیمی </a>
+                {% endif %}
+
+                {% if page_obj.has_previous %}
+                        <a class="btn btn-primary text-uppercase  me-lg-3" href="{% url 'blog:category' category.slug  page_obj.previous_page_number %}">
+                        &larr; پست های جدید </a>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+

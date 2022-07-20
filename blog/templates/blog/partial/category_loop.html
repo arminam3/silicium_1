@@ -1,0 +1,12 @@
+<ul id=" nav">
+    {% for cate in cate.children.published %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog:category' cate.slug %}">
+                {{ cate.title }}
+            </a>
+            {% if cate.children.published %}
+                {% include 'blog/partial/category_loop.html' %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

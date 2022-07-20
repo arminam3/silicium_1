@@ -1,0 +1,18 @@
+<div id="container">
+    <ul class="nav">
+        <li >
+            <a  href="{% url 'blog:home' %}">خانه </a>
+        </li>
+        {% for cate in categories %}
+            {% if cate.parent == None %}
+                <li >
+                <a  href="{% url 'blog:category' cate.slug %}">
+                    {{ cate }}
+                </a>
+                {% if cate.children.published %}
+                    {% include 'blog/partial/category_loop.html' %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
